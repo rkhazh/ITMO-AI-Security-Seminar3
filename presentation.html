@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Аудит безопасности LiteLLM v1.81.9-stable</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <style>
+    :root {
+      --severity-high: #ff4444;
+      --severity-medium: #ffaa00;
+      --severity-low: #ffdd57;
+      --confirmed: #ff4444;
+      --potential: #ffaa00;
+      --fp: #888888;
+      --accent: #42affa;
+    }
+    .reveal { font-size: 32px; }
+    .reveal h1 { font-size: 1.6em; color: var(--accent); }
+    .reveal h2 { font-size: 1.3em; color: var(--accent); margin-bottom: 0.5em; }
+    .reveal h3 { font-size: 1.0em; color: #ccc; }
+    .reveal ul { font-size: 0.78em; text-align: left; }
+    .reveal li { margin-bottom: 0.35em; line-height: 1.3; }
+    .reveal p { font-size: 0.8em; }
+
+    .title-slide h1 { font-size: 1.4em; margin-bottom: 0.3em; }
+    .title-slide .subtitle { font-size: 0.7em; color: #aaa; margin-bottom: 1em; }
+    .title-slide .meta { font-size: 0.55em; color: #888; }
+
+    .severity-high { color: var(--severity-high); font-weight: bold; }
+    .severity-medium { color: var(--severity-medium); font-weight: bold; }
+    .severity-low { color: var(--severity-low); font-weight: bold; }
+
+    .finding-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 0.4em 0.6em;
+      margin: 0.3em 0;
+      font-size: 0.72em;
+      text-align: left;
+      line-height: 1.3;
+    }
+    .finding-card.high { border-left: 4px solid var(--severity-high); }
+    .finding-card.medium { border-left: 4px solid var(--severity-medium); }
+
+    .finding-id {
+      font-weight: bold;
+      color: var(--accent);
+      margin-right: 0.3em;
+    }
+
+    .two-columns {
+      display: flex;
+      gap: 1.5em;
+      align-items: flex-start;
+    }
+    .two-columns .col {
+      flex: 1;
+      text-align: left;
+    }
+    .two-columns h3 {
+      font-size: 0.85em;
+      margin-bottom: 0.4em;
+    }
+
+    .tools-table, .fp-table {
+      font-size: 0.65em;
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 0.3em;
+    }
+    .tools-table th, .tools-table td,
+    .fp-table th, .fp-table td {
+      border: 1px solid #444;
+      padding: 0.25em 0.5em;
+      text-align: left;
+    }
+    .tools-table th, .fp-table th {
+      background: rgba(66,175,250,0.15);
+      color: var(--accent);
+    }
+
+    code {
+      background: rgba(255,255,255,0.1);
+      padding: 0.1em 0.3em;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    .highlight-box {
+      background: rgba(66,175,250,0.1);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 0.5em 0.8em;
+      margin-top: 0.5em;
+      font-size: 0.7em;
+      text-align: left;
+    }
+
+    .rec-section {
+      text-align: left;
+      margin-bottom: 0.4em;
+    }
+    .rec-section h3 {
+      font-size: 0.8em;
+      margin-bottom: 0.2em;
+    }
+    .rec-section ul {
+      font-size: 0.68em;
+      margin-top: 0;
+    }
+    .rec-section li {
+      margin-bottom: 0.2em;
+    }
+
+    .small { font-size: 0.7em; }
+    .muted { color: #888; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Title -->
+      <section class="title-slide">
+        <h1>Аудит безопасности LiteLLM v1.81.9-stable</h1>
+        <p class="subtitle">Tool-based security assessment инфраструктуры для LLM</p>
+        <ul>
+          <li><strong>Объект:</strong> LiteLLM &mdash; unified proxy для 100+ LLM-провайдеров</li>
+          <li><strong>Предмет:</strong> уязвимости кода и зависимостей, влияющие на безопасность LLM-инфраструктуры</li>
+          <li><strong>Цель:</strong> провести security assessment и классифицировать найденные проблемы</li>
+          <li><strong>Подход:</strong> Bandit + Semgrep + pip-audit/OSV + skillscan + ручной триаж</li>
+          <li><strong>Результат:</strong> 4 подтвержденные проблемы, 8 потенциальных, ~340 ложных срабатываний отфильтровано</li>
+        </ul>
+        <p class="meta">Безопасность ИИ / AI Security &bull; ИТМО &bull; 2026-04-09</p>
+      </section>
+
+      <!-- Slide 2: Why it matters -->
+      <section>
+        <h2>Почему это важно для AI Security</h2>
+        <ul>
+          <li>LiteLLM &mdash; <strong>точка концентрации рисков</strong>: API-ключи всех провайдеров, пользовательские данные, prompt-ы проходят через один proxy</li>
+          <li><strong>Компрометация proxy</strong> = компрометация всех подключенных LLM-сервисов (OpenAI, Anthropic, Azure и др.)</li>
+          <li>Custom guardrails используют <code>exec()</code> &mdash; потенциальный вектор удаленного выполнения кода (RCE)</li>
+          <li><strong>Supply chain:</strong> одна уязвимая зависимость (aiohttp) = 10 CVE разом, включая CRLF injection и утечку credentials</li>
+          <li>Безопасность AI-контура зависит не только от модели, но и от <strong>инфраструктуры оркестрации</strong>, интеграций и прав доступа</li>
+        </ul>
+        <div class="highlight-box">
+          20 000+ GitHub stars &bull; используется в production &bull; 68 прямых зависимостей &bull; поддержка 100+ LLM-провайдеров
+        </div>
+      </section>
+
+      <!-- Slide 3: Methodology -->
+      <section>
+        <h2>Объект и методология исследования</h2>
+        <table class="tools-table">
+          <tr>
+            <th>Инструмент</th>
+            <th>Версия</th>
+            <th>Назначение</th>
+            <th>Findings</th>
+          </tr>
+          <tr>
+            <td>Bandit</td>
+            <td>1.9.4</td>
+            <td>SAST, паттерн-матчинг Python</td>
+            <td>356 (10 релевантных)</td>
+          </tr>
+          <tr>
+            <td>Semgrep</td>
+            <td>1.157.0</td>
+            <td>Семантический SAST, taint tracking</td>
+            <td>9 (8 релевантных)</td>
+          </tr>
+          <tr>
+            <td>pip-audit + OSV</td>
+            <td>2.9.0</td>
+            <td>Аудит зависимостей (CVE/GHSA)</td>
+            <td>15 CVE в 5 пакетах</td>
+          </tr>
+          <tr>
+            <td>skillscan-security</td>
+            <td>&mdash;</td>
+            <td>Сканер AI agent skills</td>
+            <td class="muted">Неприменим</td>
+          </tr>
+        </table>
+        <ul style="font-size: 0.65em; margin-top: 0.5em;">
+          <li><strong>Версия:</strong> LiteLLM v1.81.9-stable, commit <code>a09d3e91</code></li>
+          <li><strong>Scope:</strong> пакет <code>litellm/</code>, 68 пинированных зависимостей</li>
+          <li><strong>Триаж:</strong> ручная классификация каждого finding &rarr; confirmed / potential / false positive</li>
+          <li><strong>Ограничение:</strong> pip-audit не смог разрешить зависимости на Python 3.14 &mdash; использован прямой запрос к OSV API</li>
+        </ul>
+      </section>
+
+      <!-- Slide 4: Confirmed vulnerabilities -->
+      <section>
+        <h2>Подтвержденные уязвимости (4)</h2>
+        <div class="finding-card high">
+          <span class="finding-id">F-01</span>
+          <span class="severity-high">HIGH</span> &mdash;
+          <strong>exec() в custom guardrails:</strong>
+          выполнение произвольного кода. Sandbox через <code>__builtins__={}</code> обходится через <code>().__class__.__bases__[0].__subclasses__()</code>
+        </div>
+        <div class="finding-card medium">
+          <span class="finding-id">F-02</span>
+          <span class="severity-medium">MEDIUM</span> &mdash;
+          <strong>Wildcard CORS:</strong>
+          <code>allow_origins=["*"]</code> + <code>allow_credentials=True</code> в FastAPI proxy-сервере
+        </div>
+        <div class="finding-card high">
+          <span class="finding-id">F-03</span>
+          <span class="severity-high">HIGH</span> &mdash;
+          <strong>10 CVE в aiohttp 3.13.3:</strong>
+          CRLF injection, утечка Cookie/Proxy-Authorization при redirect, response splitting, DoS
+        </div>
+        <div class="finding-card medium">
+          <span class="finding-id">F-04</span>
+          <span class="severity-medium">MEDIUM</span> &mdash;
+          <strong>JWT без верификации подписи:</strong>
+          <code>verify_signature=False</code> &mdash; хрупкая зависимость от SSO flow
+        </div>
+        <div class="highlight-box">
+          Источники: Bandit (exec, MD5) + Semgrep (JWT, CORS, exec) + pip-audit/OSV (aiohttp CVE)
+        </div>
+      </section>
+
+      <!-- Slide 5: Potential + False positives -->
+      <section>
+        <h2>Потенциальные проблемы и ложные срабатывания</h2>
+        <div class="two-columns">
+          <div class="col">
+            <h3 style="color: var(--severity-medium);">Потенциальные (8)</h3>
+            <ul style="font-size: 0.6em;">
+              <li>SQL injection через f-string (8 мест)</li>
+              <li>XML parsing без defusedxml (XXE)</li>
+              <li>MD5 для хеширования spend logs</li>
+              <li>HTTP-запросы без timeout (DoS)</li>
+              <li>CVE в cryptography 44.0.1</li>
+              <li>CVE в orjson 3.11.2 (рекурсия)</li>
+              <li>CVE в pyjwt 2.10.1 (crit headers)</li>
+              <li>CVE в Pillow 11.0.0 (OOB write)</li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3 style="color: var(--fp);">Ложные срабатывания (~340)</h3>
+            <table class="fp-table">
+              <tr><th>Категория</th><th>Кол-во</th></tr>
+              <tr><td>try/except/pass</td><td>144</td></tr>
+              <tr><td>Tokenizer-строки</td><td>53</td></tr>
+              <tr><td>assert usage</td><td>51</td></tr>
+              <tr><td>random (не security)</td><td>31</td></tr>
+              <tr><td>Прочие</td><td>~61</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="highlight-box">
+          ~95% Bandit-находок &mdash; шум. Ручной триаж необходим.<br>
+          Semgrep нашел JWT/CORS (Bandit не нашел) &bull; Bandit нашел SQL/timeout (Semgrep не нашел)
+        </div>
+      </section>
+
+      <!-- Slide 6: Conclusions -->
+      <section>
+        <h2>Выводы для защиты AI-систем</h2>
+        <ul>
+          <li><code>exec()</code> в guardrails &mdash; <strong>самый критичный риск:</strong> sandbox bypass тривиален, требуется контейнерная изоляция или AST-based whitelist</li>
+          <li><strong>Supply chain</strong> (aiohttp) &mdash; скрытая атакуемая поверхность: 10 CVE в одной зависимости, которую используют все HTTP-запросы к провайдерам</li>
+          <li>Статический анализ <strong>не покрывает runtime-риски:</strong> авторизация, multi-tenant isolation, SSRF, prompt injection, обход guardrails</li>
+          <li><strong>Взаимодополняемость инструментов:</strong> ни Bandit, ни Semgrep по отдельности не нашли все проблемы &mdash; комбинация дает лучшее покрытие</li>
+          <li><strong>skillscan неприменим:</strong> несоответствие threat model (AI agent skills vs. инфраструктурный код) &mdash; важно выбирать инструменты по типу проекта</li>
+        </ul>
+      </section>
+
+      <!-- Slide 7: Recommendations -->
+      <section>
+        <h2>Практические рекомендации</h2>
+        <div class="rec-section">
+          <h3 style="color: #4caf50;">Quick wins (низкие усилия, высокий эффект)</h3>
+          <ul>
+            <li>Обновить <code>aiohttp &ge; 3.13.4</code> &mdash; закрывает 10 CVE</li>
+            <li>Обновить <code>orjson &ge; 3.11.6</code>, <code>pyjwt &ge; 2.12.0</code></li>
+            <li>Добавить <code>timeout</code> ко всем HTTP-запросам</li>
+            <li>Заменить MD5 на SHA-256 для spend logs</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <h3 style="color: var(--severity-medium);">Структурные изменения</h3>
+          <ul>
+            <li>Заменить <code>exec()</code> на AST whitelist или sandboxed subprocess</li>
+            <li>Настроить CORS с явным списком доверенных origins</li>
+            <li>Добавить явную верификацию JWT-подписи</li>
+            <li>Заменить <code>xml.etree</code> на <code>defusedxml</code></li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <h3 style="color: var(--accent);">Процесс</h3>
+          <ul>
+            <li>Включить SAST в CI/CD pipeline</li>
+            <li>Дополнить DAST/пентестом для runtime-рисков (auth, SSRF, prompt injection)</li>
+            <li>Полный аудит транзитивных зависимостей на совместимой Python-версии</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide',
+      center: true
+    });
+  </script>
+</body>
+</html>
