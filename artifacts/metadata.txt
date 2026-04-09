@@ -1,0 +1,10 @@
+=== Metadata ===
+Date: 2026-04-09 18:46:32 UTC
+OS: Darwin bitcoin-macbook 25.3.0 Darwin Kernel Version 25.3.0: Wed Jan 28 20:56:35 PST 2026; root:xnu-12377.91.3~2/RELEASE_ARM64_T6030 arm64
+Python: Python 3.14.2
+Commit: a09d3e9162ebd7b436a68e92c2b9b6c070fa72d8
+Tag: v1.81.9-stable
+Bandit: bandit 1.9.4
+  python version = 3.14.2 (main, Dec  5 2025, 16:49:16) [Clang 17.0.0 (clang-1700.4.4.1)]
+Semgrep: 1.157.0
+pip-audit: pip-audit 2.9.0

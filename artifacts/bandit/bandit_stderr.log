@@ -1,0 +1,11 @@
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[json]	INFO	JSON output written to file: artifacts/bandit/bandit_full.json
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.14.2
+[text]	INFO	Text output written to file: artifacts/bandit/bandit_summary.txt

@@ -1,0 +1,78 @@
+                   
+                   
+┌─────────────────┐
+│ 9 Code Findings │
+└─────────────────┘
+                                                                          
+    litellm-v1.81.9/litellm/litellm_core_utils/prompt_templates/factory.py
+   ❯❯❱ python.lang.security.use-defused-xml.use-defused-xml
+          ❰❰ Blocking ❱❱
+          The Python documentation recommends using `defusedxml` instead of `xml` because the native Python
+          `xml` library is vulnerable to XML External Entity (XXE) attacks. These attacks can leak         
+          confidential data and "XML bombs" can cause denial of service.                                   
+          Details: https://sg.run/kX47                                                                     
+                                                                                                           
+            7┆ import xml.etree.ElementTree as ET
+                                                                   
+    litellm-v1.81.9/litellm/proxy/guardrails/guardrail_endpoints.py
+    ❯❱ python.lang.security.audit.exec-detected.exec-detected
+          ❰❰ Blocking ❱❱
+          Detected the use of exec(). exec() can be dangerous if used to evaluate dynamic content. If this 
+          content can be input from outside the program, this may be a code injection vulnerability. Ensure
+          evaluated content is not definable by external sources.                                          
+          Details: https://sg.run/ndRX                                                                     
+                                                                                                           
+          1415┆ exec(compile(request.custom_code, "<guardrail>", "exec"), exec_globals)
+                                                                                                 
+    litellm-v1.81.9/litellm/proxy/guardrails/guardrail_hooks/custom_code/custom_code_guardrail.py
+    ❯❱ python.lang.security.audit.exec-detected.exec-detected
+          ❰❰ Blocking ❱❱
+          Detected the use of exec(). exec() can be dangerous if used to evaluate dynamic content. If this 
+          content can be input from outside the program, this may be a code injection vulnerability. Ensure
+          evaluated content is not definable by external sources.                                          
+          Details: https://sg.run/ndRX                                                                     
+                                                                                                           
+          153┆ exec(compile(self.custom_code, "<guardrail>", "exec"), exec_globals)
+                                                                
+    litellm-v1.81.9/litellm/proxy/management_endpoints/ui_sso.py
+   ❯❯❱ python.jwt.security.unverified-jwt-decode.unverified-jwt-decode
+          ❰❰ Blocking ❱❱
+          Detected JWT token decoded with 'verify=False'. This bypasses any integrity checks for the token
+          which means the token could be tampered with by malicious actors. Ensure that the JWT token is  
+          verified.                                                                                       
+          Details: https://sg.run/6nyB                                                                    
+                                                                                                          
+           ▶▶┆ Autofix ▶ True
+          194┆ access_token_str, options={"verify_signature": False}
+            ⋮┆----------------------------------------
+           ▶▶┆ Autofix ▶ True
+          2570┆ decoded_token = jwt.decode(id_token, options={"verify_signature": False})
+                                                                        
+    litellm-v1.81.9/litellm/proxy/pass_through_endpoints/common_utils.py
+    ❯❱ python.flask.security.audit.directly-returned-format-string.directly-returned-format-string
+          ❰❰ Blocking ❱❱
+          Detected Flask route directly returning a formatted string. This is subject to cross-site scripting
+          if user input can reach the string. Consider using the template engine instead and rendering pages 
+          with 'render_template()'.                                                                          
+          Details: https://sg.run/Zv6o                                                                       
+                                                                                                             
+           15┆ return f"Bearer {litellm_api_key}"
+                                                 
+    litellm-v1.81.9/litellm/proxy/proxy_server.py
+    ❯❱ python.fastapi.security.wildcard-cors.wildcard-cors
+          ❰❰ Blocking ❱❱
+          CORS policy allows any origin (using wildcard '*'). This is insecure and should be avoided.
+          Details: https://sg.run/KxApY                                                              
+                                                                                                     
+          1214┆ allow_origins=origins,
+                                                                        
+    litellm-v1.81.9/litellm/proxy/spend_tracking/spend_tracking_utils.py
+    ❯❱ python.lang.security.insecure-hash-algorithms-md5.insecure-hash-algorithm-md5
+          ❰❰ Blocking ❱❱
+          Detected MD5 hash algorithm which is considered insecure. MD5 is not collision resistant and is
+          therefore not suitable as a cryptographic signature. Use SHA256 or SHA3 instead.               
+          Details: https://sg.run/vYrY                                                                   
+                                                                                                         
+          136┆ unique_hash = hashlib.md5(json_str.encode()).hexdigest()
+            ⋮┆----------------------------------------
+          140┆ return hashlib.md5(str(response_obj).encode()).hexdigest()

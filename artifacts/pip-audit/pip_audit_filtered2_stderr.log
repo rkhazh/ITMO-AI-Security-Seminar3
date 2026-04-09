@@ -1,0 +1,12 @@
+WARNING:pip_audit._cli:--no-deps is supported, but users are encouraged to fully hash their pinned dependencies
+WARNING:pip_audit._cli:Consider using a tool like `pip-compile`: https://pip-tools.readthedocs.io/en/latest/#using-hashes
+ERROR:pip_audit._virtual_env:internal pip failure: error: resolution-too-deep
+
+× Dependency resolution exceeded maximum depth
+╰─> Pip cannot resolve the current dependencies as the dependency graph is too complex for pip to solve efficiently.
+
+hint: Try adding lower bounds to constrain your dependencies, for example: 'package>=2.0.0' instead of just 'package'.
+
+Link: https://pip.pypa.io/en/stable/topics/dependency-resolution/#handling-resolution-too-deep-errors
+
+ERROR:pip_audit._cli:Failed to install packages: ['/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmp0vru8847/bin/python3.14', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmpqmpk6jna/tmptmqesrc4', '-r', 'artifacts/pip-audit/requirements_filtered2.txt']

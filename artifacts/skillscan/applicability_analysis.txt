@@ -1,0 +1,52 @@
+=== skillscan-security Applicability Analysis for LiteLLM v1.81.9-stable ===
+
+Date: 2026-04-09
+Analyst: Claude (automated security assessment)
+
+1. TOOL DESCRIPTION:
+   skillscan (https://anonymous.4open.science/r/skillscan/) is a research framework 
+   for scanning AI agent skills collected from marketplaces (skills.rest, skillsmp.com).
+   
+2. ARCHITECTURE:
+   - Crawls skills from marketplaces using crawler module
+   - Stores crawled data in all_skills_data.json
+   - Runs security checks via:
+     a) skill-security-scan CLI tool (external binary, not included)
+     b) LLM Guard (prompt injection detection)
+   
+3. APPLICABILITY TO LITELLM:
+   
+   skillscan is NOT applicable to LiteLLM for the following reasons:
+   
+   a) INPUT FORMAT MISMATCH: skillscan expects pre-crawled skill data in a specific 
+      JSON format (all_skills_data.json with skill IDs, metadata from marketplaces).
+      LiteLLM is a Python gateway project, not a skill marketplace artifact.
+   
+   b) MISSING CLI DEPENDENCY: The core scanning is performed by the external 
+      `skill-security-scan` CLI binary which is not included in the skillscan 
+      repository and would need separate installation. This tool is designed to 
+      scan individual skill packages, not arbitrary Python codebases.
+   
+   c) SKILL-SPECIFIC CHECKS: The security rules in skillscan (data exfiltration 
+      patterns, privilege escalation in skill contexts, prompt injection) are 
+      designed for evaluating untrusted third-party skill packages — not for 
+      auditing the infrastructure code of an LLM proxy.
+   
+   d) MCP COMPONENTS IN LITELLM: While LiteLLM does include MCP server functionality 
+      (mcp==1.25.0 dependency, litellm/proxy/pass_through_endpoints/ MCP routes), 
+      this is LiteLLM acting AS an MCP server — not as a skill/plugin to be consumed 
+      by an agent. skillscan is designed to scan skills FOR agents, not the agent 
+      infrastructure itself.
+
+4. ATTEMPTED EXECUTION:
+   The tool cannot be meaningfully executed against LiteLLM because:
+   - No all_skills_data.json exists for LiteLLM
+   - The skill-security-scan CLI binary is not available
+   - Creating a synthetic skill entry from LiteLLM code would not produce 
+     meaningful results as the rules are calibrated for skill packages
+
+5. CONCLUSION:
+   skillscan-security is not applicable to LiteLLM v1.81.9-stable. This is a 
+   valid research finding, not a failure. The tool addresses a different threat 
+   model (untrusted skill evaluation) than what is needed for auditing LiteLLM 
+   (infrastructure security of an LLM proxy/gateway).

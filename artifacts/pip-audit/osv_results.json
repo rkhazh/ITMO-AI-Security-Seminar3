@@ -1,0 +1,198 @@
+[
+  {
+    "package": "orjson",
+    "version": "3.11.2",
+    "id": "GHSA-hx9q-6w63-j58v",
+    "aliases": [
+      "CVE-2025-67221"
+    ],
+    "summary": "orjson does not limit recursion for deeply nested JSON documents",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:P",
+    "fixed": [
+      "3.11.6"
+    ]
+  },
+  {
+    "package": "pyjwt",
+    "version": "2.10.1",
+    "id": "GHSA-752w-5fwx-jx9f",
+    "aliases": [
+      "CVE-2026-32597"
+    ],
+    "summary": "PyJWT accepts unknown `crit` header extensions",
+    "severity": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+    "fixed": [
+      "2.12.0"
+    ]
+  },
+  {
+    "package": "Pillow",
+    "version": "11.0.0",
+    "id": "GHSA-cfh3-3jmp-rvhc",
+    "aliases": [
+      "BIT-pillow-2026-25990",
+      "CVE-2026-25990"
+    ],
+    "summary": "Pillow affected by out-of-bounds write when loading PSD images",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:P",
+    "fixed": [
+      "12.1.1"
+    ]
+  },
+  {
+    "package": "cryptography",
+    "version": "44.0.1",
+    "id": "GHSA-m959-cc7f-wv43",
+    "aliases": [
+      "CVE-2026-34073"
+    ],
+    "summary": "cryptography has incomplete DNS name constraint enforcement on peer names",
+    "severity": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "46.0.6"
+    ]
+  },
+  {
+    "package": "cryptography",
+    "version": "44.0.1",
+    "id": "GHSA-r6ph-v2qm-q3c2",
+    "aliases": [
+      "CVE-2026-26007"
+    ],
+    "summary": "cryptography Vulnerable to a Subgroup Attack Due to Missing Subgroup Validation for SECT Curves",
+    "severity": "CVSS:4.0/AV:N/AC:H/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+    "fixed": [
+      "46.0.5"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-2vrm-gr82-f7m5",
+    "aliases": [
+      "CVE-2026-34514"
+    ],
+    "summary": "AIOHTTP has CRLF injection through multipart part content type header construction",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-3wq7-rqq7-wx6j",
+    "aliases": [
+      "CVE-2026-34517"
+    ],
+    "summary": "AIOHTTP has late size enforcement for non-file multipart fields causes memory DoS",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-63hf-3vf5-4wqf",
+    "aliases": [
+      "CVE-2026-34520"
+    ],
+    "summary": "AIOHTTP's C parser (llhttp) accepts null bytes and control characters in response header values - header injection/secur",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-966j-vmvw-g2g9",
+    "aliases": [
+      "CVE-2026-34518"
+    ],
+    "summary": "AIOHTTP leaks Cookie and Proxy-Authorization headers on cross-origin redirect",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L/VI:N/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-c427-h43c-vf67",
+    "aliases": [
+      "CVE-2026-34525"
+    ],
+    "summary": "AIOHTTP accepts duplicate Host headers",
+    "severity": "CVSS:4.0/AV:N/AC:H/AT:P/PR:N/UI:N/VC:N/VI:L/VA:N/SC:L/SI:L/SA:N",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-hcc4-c3v8-rx92",
+    "aliases": [
+      "CVE-2026-34513"
+    ],
+    "summary": "AIOHTTP Affected by Denial of Service (DoS) via Unbounded DNS Cache in TCPConnector",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-m5qp-6w8w-w647",
+    "aliases": [
+      "CVE-2026-34516"
+    ],
+    "summary": "AIOHTTP has a Multipart Header Size Bypass",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-mwh4-6h8g-pg8w",
+    "aliases": [
+      "CVE-2026-34519"
+    ],
+    "summary": "AIOHTTP has HTTP response splitting via \\r in reason phrase",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:L/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-p998-jp59-783m",
+    "aliases": [
+      "CVE-2026-34515"
+    ],
+    "summary": "AIOHTTP affected by UNC SSRF/NTLMv2 Credential Theft/Local File Read in static resource handler on Windows",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N/E:U",
+    "fixed": [
+      "3.13.4"
+    ]
+  },
+  {
+    "package": "aiohttp",
+    "version": "3.13.3",
+    "id": "GHSA-w2fm-2cpv-w7v5",
+    "aliases": [
+      "CVE-2026-22815"
+    ],
+    "summary": "aiohttp allows unlimited trailer headers, leading to possible uncapped memory usage",
+    "severity": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N",
+    "fixed": [
+      "3.13.4"
+    ]
+  }
+]

@@ -1,0 +1,33 @@
+WARNING:pip_audit._cli:--no-deps is supported, but users are encouraged to fully hash their pinned dependencies
+WARNING:pip_audit._cli:Consider using a tool like `pip-compile`: https://pip-tools.readthedocs.io/en/latest/#using-hashes
+ERROR:pip_audit._virtual_env:internal pip failure:   error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [20 lines of output]
+      Traceback (most recent call last):
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmpqzmwuv7d/lib/python3.14/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 389, in <module>
+          main()
+          ~~~~^^
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmpqzmwuv7d/lib/python3.14/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 373, in main
+          json_out["return_val"] = hook(**hook_input["kwargs"])
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmpqzmwuv7d/lib/python3.14/site-packages/pip/_vendor/pyproject_hooks/_in_process/_in_process.py", line 143, in get_requires_for_build_wheel
+          return hook(config_settings)
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/pip-build-env-fbotc0vv/overlay/lib/python3.14/site-packages/setuptools/build_meta.py", line 333, in get_requires_for_build_wheel
+          return self._get_build_requires(config_settings, requirements=[])
+                 ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/pip-build-env-fbotc0vv/overlay/lib/python3.14/site-packages/setuptools/build_meta.py", line 301, in _get_build_requires
+          self.run_setup()
+          ~~~~~~~~~~~~~~^^
+        File "/private/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/pip-build-env-fbotc0vv/overlay/lib/python3.14/site-packages/setuptools/build_meta.py", line 317, in run_setup
+          exec(code, locals())
+          ~~~~^^^^^^^^^^^^^^^^
+        File "<string>", line 20, in <module>
+      ModuleNotFoundError: No module named 'pkg_resources'
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+ERROR: Failed to build 'ddtrace' when getting requirements to build wheel
+
+ERROR:pip_audit._cli:Failed to install packages: ['/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmpqzmwuv7d/bin/python3.14', '-m', 'pip', 'install', '--no-input', '--keyring-provider=subprocess', '--dry-run', '--report', '/var/folders/5r/3_nzfc052jd3jkl8m4svr26m0000gn/T/tmp3sqdsx8c/tmpm5v64f04', '-r', 'artifacts/pip-audit/requirements_filtered.txt']

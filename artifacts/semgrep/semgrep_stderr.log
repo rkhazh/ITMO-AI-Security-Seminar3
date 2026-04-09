@@ -1,0 +1,125 @@
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 2279 files tracked by git with 678 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      15    2279          Community     678                                                                
+  python          198    1544                                                                                           
+  js               78     207                                                                                           
+  yaml             19      35                                                                                           
+  html              1      34                                                                                           
+  json              3      13                                                                                           
+  bash              1       1                                                                                           
+                                                                                                                        
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 9 (9 blocking)
+ • Rules run: 315
+ • Targets scanned: 2279
+ • Parsed lines: ~99.9%
+ • Scan skipped: 
+   ◦ Files larger than  files 1.0 MB: 6
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 315 rules on 2279 files: 9 findings.
+               
+               
+┌─────────────┐
+│ Scan Status │
+└─────────────┘
+  Scanning 2279 files tracked by git with 678 Code rules:
+                                                                                                                        
+  Language      Rules   Files          Origin      Rules                                                                
+ ─────────────────────────────        ───────────────────                                                               
+  <multilang>      15    2279          Community     678                                                                
+  python          198    1544                                                                                           
+  js               78     207                                                                                           
+  yaml             19      35                                                                                           
+  html              1      34                                                                                           
+  json              3      13                                                                                           
+  bash              1       1                                                                                           
+                                                                                                                        
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/__init__.py when running the following rules:
+[python.lang.security.audit.dangerous-system-call-tainted-env-args.dangerous-system-call-tainted-env-args]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/llms/custom_httpx/llm_http_handler.py when running the following
+rules: [python.lang.security.audit.dangerous-system-call-tainted-env-args.dangerous-system-call-tainted-env-args]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/3754e5316d782fdf.js
+when running the following rules: [javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-
+script-tag]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/4360494834605341.js
+when running the following rules: [javascript.express.security.audit.express-ssrf.express-ssrf]
+Warning: 3 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/496b84010c33cf69.js
+when running the following rules: [javascript.aws-lambda.security.tainted-html-string.tainted-html-string,
+javascript.express.security.audit.express-ssrf.express-ssrf, javascript.express.security.express-insecure-template-
+usage.express-insecure-template-usage]
+Semgrep stopped running rules on litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/496b84010c33cf69.js
+after 3 timeout error(s). See `--timeout-threshold` for more info.
+Warning: 3 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/7e417dd24c8becd0.js
+when running the following rules: [javascript.angular.security.detect-angular-element-taint.detect-angular-element-
+taint, javascript.express.security.audit.express-open-redirect.express-open-redirect,
+javascript.express.security.audit.express-ssrf.express-ssrf]
+Semgrep stopped running rules on litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/7e417dd24c8becd0.js
+after 3 timeout error(s). See `--timeout-threshold` for more info.
+Warning: 2 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/7f9e9c54ac262de2.js
+when running the following rules: [javascript.aws-lambda.security.tainted-html-string.tainted-html-string,
+typescript.react.security.audit.react-unsanitized-property.react-unsanitized-property]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/8354d717e34ebd6f.js
+when running the following rules: [javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-
+script-tag]
+Warning: 3 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/a5b66d8611aefbcd.js
+when running the following rules: [javascript.express.security.audit.express-open-redirect.express-open-redirect,
+javascript.express.security.audit.express-ssrf.express-ssrf, javascript.express.security.express-insecure-template-
+usage.express-insecure-template-usage]
+Semgrep stopped running rules on litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/a5b66d8611aefbcd.js
+after 3 timeout error(s). See `--timeout-threshold` for more info.
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/b32c07bb80491ab6.js
+when running the following rules: [javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-
+script-tag]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/ba3f0517ce70ce68.js
+when running the following rules: [javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-
+script-tag]
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/c7b74067c01ee971.js
+when running the following rules: [javascript.express.security.audit.express-ssrf.express-ssrf]
+Warning: 3 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/cbf642b85b98cae4.js
+when running the following rules: [javascript.express.security.audit.express-open-redirect.express-open-redirect,
+javascript.express.security.audit.express-ssrf.express-ssrf, javascript.express.security.express-insecure-template-
+usage.express-insecure-template-usage]
+Semgrep stopped running rules on litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/cbf642b85b98cae4.js
+after 3 timeout error(s). See `--timeout-threshold` for more info.
+Warning: 1 timeout error(s) in litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/eb42b17c8b76fe7b.js
+when running the following rules: [javascript.lang.security.audit.unknown-value-with-script-tag.unknown-value-with-
+script-tag]
+Warning: 3 timeout error(s) in
+litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/fd9d1056-a07bacd8fcc2728b.js when running the
+following rules: [javascript.express.security.audit.express-ssrf.express-ssrf, javascript.express.security.express-
+insecure-template-usage.express-insecure-template-usage, javascript.express.security.injection.raw-html-format.raw-html-
+format]
+Semgrep stopped running rules on
+litellm-v1.81.9/litellm/proxy/_experimental/out/_next/static/chunks/fd9d1056-a07bacd8fcc2728b.js after 3 timeout
+error(s). See `--timeout-threshold` for more info.
+Warning: 2 timeout error(s) in litellm-v1.81.9/litellm/proxy/proxy_server.py when running the following rules:
+[python.lang.security.audit.dangerous-subprocess-use-tainted-env-args.dangerous-subprocess-use-tainted-env-args,
+python.lang.security.audit.dangerous-system-call-tainted-env-args.dangerous-system-call-tainted-env-args]
+                
+                
+┌──────────────┐
+│ Scan Summary │
+└──────────────┘
+✅ Scan completed successfully.
+ • Findings: 9 (9 blocking)
+ • Rules run: 315
+ • Targets scanned: 2279
+ • Parsed lines: ~99.9%
+ • Scan skipped: 
+   ◦ Files larger than  files 1.0 MB: 6
+ • Scan was limited to files tracked by git
+ • For a detailed list of skipped files and lines, run semgrep with the --verbose flag
+Ran 315 rules on 2279 files: 9 findings.

@@ -1,0 +1,20 @@
+# Python virtual environment
+venv-security/
+
+# Cloned source code (reproducible via git clone)
+litellm-v1.81.9/
+
+# OS files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
